@@ -1,5 +1,7 @@
 # React: Aplicaciones en tiempo real con Socket-io
 
+Deploy en: [Servidor propio](http://test.patchamama.com:8081/)
+
 ### Instalar socket.io en el servidor con node.js y express
 
 ```bash
@@ -33,14 +35,41 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Usuario desconectado', socket.id)
   })
-  socket.on('mensaje', (data) => {
+  socket.on('mensaje-del-cliente', (data) => {
     console.log('Mensaje recibido:', data)
-    io.emit('mensaje', data) // Emitir el mensaje a todos los clientes conectados
+    io.emit('mensaje-del-servidor', data) // Emitir el mensaje a todos los clientes conectados
   })
 })
 server.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
+```
+
+Ejemplo de código en el cliente (index.html):
+
+```html
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
+  integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script>
+  const socket = io('http://localhost:8080') // Cambiar al URL del servidor
+  socket.on('connect', () => {
+    console.log('Conectado al servidor de sockets')
+    })
+    socket.on('mensaje-del-servidor', (data) => {
+      console.log('Mensaje recibido del servidor:', data)
+    })
+    function enviarMensaje() {
+      const mensaje = document.getElementById('mensaje').value
+      socket.emit('mensaje-del-cliente', mensaje)
+    }
+
+    <input type="text" id="mensaje" placeholder="Escribe tu mensaje aquí">
+    <button onclick="enviarMensaje()">Enviar</button>
+</script>
 ```
 
 ### Referencias
