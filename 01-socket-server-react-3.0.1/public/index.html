@@ -31,9 +31,13 @@
             <button type="submit" class="btn btn-primary" id="btnEnviar">
               Enviar
             </button>
-            <button type="button" class="btn btn-secondary" id="btnLimpiar">
-              Limpiar
-            </button>
+            <input
+              type="text"
+              class="form-control"
+              id="txtUsuario"
+              value=""
+              placeholder="Usuario"
+            />
           </div>
         </div>
       </form>
@@ -61,6 +65,7 @@
         const mensajes = document.querySelector('#misMensajes')
         const txtMensaje = document.querySelector('#txtMensaje')
         const btnLimpiar = document.querySelector('#btnLimpiar')
+        const txtUsuario = document.querySelector('#txtUsuario')
 
         formulario.addEventListener('submit', (e) => {
           e.preventDefault()
@@ -74,7 +79,7 @@
           // Enviar el mensaje al servidor
           socket.emit('mensaje-to-server', {
             texto: nuevoMensaje,
-            nombre: 'Mandy',
+            nombre: txtUsuario.value || 'Sin Nombre',
           })
         })
 
