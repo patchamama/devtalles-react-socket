@@ -11,7 +11,7 @@ npm i express
 
 ### Crear archivo index.js con socket.io y express
 
-```js
+```javascript
 // Servidor express
 const app = require('express')
 
